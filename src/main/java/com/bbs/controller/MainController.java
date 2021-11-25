@@ -1,9 +1,5 @@
 package com.bbs.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -12,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbs.service.UsersService;
 
@@ -28,6 +25,7 @@ public class MainController {
 	@Inject
 	UsersService usersService;
 	
+	// url 패턴이 'path/' 일 경우
 	@RequestMapping(value = "/", method = RequestMethod.GET)   //    value = "/"에서 /은 URL이다
 	public String main(Model model) throws Exception {
 		
@@ -36,12 +34,15 @@ public class MainController {
 		return "main/main";  //views 폴더에서 보여줄 file or path(만약 main이라는 폴더안에 main 파일이 있다면 main/main을 적어준다
 	}
 	
+	// url 패턴이 'path/join' 일 경우
 	@RequestMapping(value = "/join", method = RequestMethod.GET)  // url   
 	public String join(Model model) throws Exception {
 		
 		
 		return "main/join";  // 파일 경로
 	}
+	
+	// url 패턴이 'path/login' 일 경우
 	@RequestMapping(value = "/login", method = RequestMethod.GET)   
 	public String login(Model model) throws Exception {
 		
@@ -49,11 +50,44 @@ public class MainController {
 		return "main/login";  
 	}
 	
+	// url 패턴이 'path/idCheck' 일 경우
+	// http://localhost:8081/idCeck?user_id=qwer
 	@RequestMapping(value = "/idCheck", method = RequestMethod.GET)
+	// 반환값을 페이지에 직첩 출력
+	@ResponseBody 
 	public String idCheck(String user_id) throws Exception {
 		
 		int result = usersService.idCheck(user_id);
 		
-		return result;
+		return result + "";  // String str = Integer.toString(idCheck)가 정석이지만 번거롭고 길다.
+	}
+	
+	// url 패턴이 'path/sendAuthMail'일 경우
+	@RequestMapping(value = "/sendAuthMail", method = RequestMethod.GET)
+	@ResponseBody
+	public String sendAuthMail(String user_mail) throws Exception {
+		
+		int result = usersService.setAuthnum(user_mail);
+		
+		return result +"";
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

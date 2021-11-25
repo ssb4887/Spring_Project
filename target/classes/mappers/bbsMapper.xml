@@ -6,9 +6,29 @@
  	
  	<!-- 유저 아이디 중복체크 SQL -->
  	<select id="idCheck" resultType="string">
- 		SELECT user_id
- 		FROM USERS
- 		WHERE user_id = #{user_id}
+ 		SELECT 	user_id
+ 		FROM 	USERS
+ 		WHERE 	user_id = #{user_id}
  	</select>
+ 	
+ 	 	<!-- 이메일 인증번호 불어오기 SQL -->
+ 	<select id="getAuthnum" resultType="int"> <!-- 여기서 int는 기존의 int가 아니라 integer다 -->
+ 		SELECT 	auth_num
+ 		FROM 	AUTHMAIL
+ 		WHERE 	user_mail = #{user_mail}
+ 	</select>
+ 	
+ 	<!-- 이메일 인증번호 저장 SQL -->
+ 	<insert id="setAuthnum">
+ 		INSERT INTO AUTHMAIL
+ 		VALUES (#{user_mail}, #{auth_num})
+ 	</insert>
+ 	
+ 	<!-- 이메일 인증번호 수정하기 SQL -->
+ 	<update id="resetAuthnum">
+ 		UPDATE 	AUTHMAIL
+ 		SET 	auth_num = #{auth_num}
+ 		WHERE 	user_mail = #{user_mail}
+ 	</update>
  	
  </mapper>
