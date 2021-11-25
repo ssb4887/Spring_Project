@@ -142,7 +142,7 @@ $(document).ready(function(){
 					alert('데이터베이스 오류가 발생했습니다.');
 					$('#auth_num').val('');
 				}	
-			})	
+			}	
 		});
 	});
 	

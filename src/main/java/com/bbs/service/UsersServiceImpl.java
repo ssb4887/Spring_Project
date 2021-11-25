@@ -14,7 +14,7 @@ public class UsersServiceImpl implements UsersService {
 	UsersDAO dao;
 	
 	@Override
-	public int check_id(String user_id) throws Exception {
+	public int idCheck(String user_id) throws Exception {
 		
 		return 0;
 	}
