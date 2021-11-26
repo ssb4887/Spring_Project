@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.bbs.dao.UsersDAO;
 import com.bbs.util.Mail;
 import com.bbs.vo.Authmail;
+import com.bbs.vo.Users;
 
 // homecontroller에서 선언한 service가 여기를 찾아옴
 @Service
@@ -115,6 +116,12 @@ public class UsersServiceImpl implements UsersService {
 //		}
 			
 		return result;
+	}
+
+	@Override
+	public void joinAction(Users users) throws Exception {
+		dao.join(users);
+	
 	}
 
 }

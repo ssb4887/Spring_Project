@@ -193,7 +193,7 @@
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-12 col-md-12 col-lg-12">
-						<input type="text" class="form-control" name="addr3" placeholder="상세주소" >
+						<input type="text" class="form-control" id="addr3" name="addr3" placeholder="상세주소" >
 					</div>
 				</div>
 				
