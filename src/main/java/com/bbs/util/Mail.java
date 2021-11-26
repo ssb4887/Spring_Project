@@ -14,6 +14,7 @@ public class Mail extends Authenticator {
 		pw = "Qazw1234!!";
 	}
 		
+	
 	protected PasswordAuthentication getPasswordAuthentication() {
 	
 		return new PasswordAuthentication(id, pw);
