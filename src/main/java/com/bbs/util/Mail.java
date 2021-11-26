@@ -10,8 +10,8 @@ public class Mail extends Authenticator {
 	protected static String pw;
 		
 	public Mail() {
-		id = "ssb4887suk@daum.net";
-		pw = "";
+		id = "1223020@donga.ac.kr";
+		pw = "Qazw1234!!";
 	}
 		
 	protected PasswordAuthentication getPasswordAuthentication() {
