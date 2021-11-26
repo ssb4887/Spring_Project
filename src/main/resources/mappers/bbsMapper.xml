@@ -11,7 +11,8 @@
  		WHERE 	user_id = #{user_id}
  	</select>
  	
- 	 	<!-- 이메일 인증번호 불어오기 SQL -->
+ 	 <!-- 이메일 인증번호 불어오기 SQL -->
+ 	 <!-- SELECT만 데이터 반환타입 설정해준다 -->
  	<select id="getAuthnum" resultType="int"> <!-- 여기서 int는 기존의 int가 아니라 integer다 -->
  		SELECT 	auth_num
  		FROM 	AUTHMAIL
@@ -31,4 +32,9 @@
  		WHERE 	user_mail = #{user_mail}
  	</update>
  	
+ 	<!-- 이메일 인증번호 삭제 SQL -->
+ 	<delete id="deleteAuthmail">
+ 		DELETE FROM AUTHMAIL
+ 		WHERE user_mail = #{user_mail}
+ 	</delete>
  </mapper>
