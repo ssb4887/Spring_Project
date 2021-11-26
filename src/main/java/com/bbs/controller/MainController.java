@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbs.service.UsersService;
+import com.bbs.vo.Authmail;
 
 @Controller
 public class MainController {
@@ -70,6 +71,14 @@ public class MainController {
 		int result = usersService.setAuthnum(user_mail);
 		
 		return result +"";
+	}
+	
+	// url 패턴이 'path/mailAuth'일 경우
+	@RequestMapping(value="/mailAuth", method= RequestMethod.POST)
+	@ResponseBody
+	public String mailAuth(Authmail authmail) throws Exception{
+		
+		return null;
 	}
 }
 
