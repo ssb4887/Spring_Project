@@ -10,5 +10,5 @@ public interface UsersService {
 	public int setAuthnum(String user_mail) throws Exception;
 	public int checkAuthnum(Authmail authmail) throws Exception; // boolean도 가능하지만 다양한 실패의 원인을 알려주기 위해 int를 사용한다
 	public void joinAction(Users users) throws Exception;
-
+	public int loginAction(Users users) throws Exception;
 }

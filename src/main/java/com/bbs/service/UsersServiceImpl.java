@@ -124,6 +124,21 @@ public class UsersServiceImpl implements UsersService {
 	
 	}
 
+	@Override
+	public int loginAction(Users users) throws Exception {
+		
+		
+		if(dao.login(users) == null) return 1;
+		return 0;
+		
+//		int result = 0;
+//		Users rs = dao.login(users);
+//		
+//		if(rs == null) result = 1;
+//		
+//		return result;
+	}
+
 }
 
 

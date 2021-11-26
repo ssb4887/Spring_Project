@@ -52,5 +52,10 @@ public class UsersDAOImlp implements UsersDAO {
 		
 	}
 
+	@Override
+	public Users login(Users users) throws Exception {
+		return sqlSession.selectOne(SESSION + ".login", users);
+	}
+
 
 }

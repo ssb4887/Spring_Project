@@ -46,6 +46,14 @@
  				#{user_gender}, #{user_email}, #{user_addr}
  			   )
  	</insert>
+ 	
+ 	<!-- 로그인 SQL -->
+ 	<select id="login" resultType="com.bbs.vo.Users">
+		SELECT *
+ 		FROM USERS
+ 		WHERE user_id = #{user_id} 
+ 		AND   user_pw = #{user_pw}
+ 	</select>
  </mapper>
  
  

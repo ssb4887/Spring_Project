@@ -1,6 +1,7 @@
 package com.bbs.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,7 @@ public class MainController {
 	}
 	
 	// url 패턴이 'path/mailAuth'일 경우
-	@RequestMapping(value="/mailAuth", method= RequestMethod.POST)
+	@RequestMapping(value = "/mailAuth", method = RequestMethod.POST)
 	@ResponseBody
 	public String mailAuth(Authmail authmail) throws Exception{
 		
@@ -84,7 +85,7 @@ public class MainController {
 	}
 	
 	// url 패턴이 'path/joinAction'일 경우
-	@RequestMapping(value ="/joinAction", method=RequestMethod.POST)
+	@RequestMapping(value = "/joinAction", method = RequestMethod.POST) //@ResponseBody를 안적는 이유는 결과값이 필요하지 않기에 그저 회원가입후 로그인페이지로 이동
 	public String joinAction(Users users, String addr1, String addr2, String addr3) throws Exception {
 		
 		users.setUser_addr(addr1 + " " + addr2 + " " + addr3);
@@ -92,6 +93,22 @@ public class MainController {
 		
 		
 		return "redirect:/login"; // redirect:/login  = http://localhost:8081/login
+	}
+	
+	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
+	public String loginAction(Users users, HttpSession session) throws Exception {
+		
+		int result = usersService.loginAction(users);
+		
+		if(result == 0) {
+			session.setAttribute("user_id", users.getUser_id());
+			// 페이지 이동 -> localhost:8081/
+		} else {
+			// 메세지 전달 (로그인 정보가 잘못됐습니다.)
+			// 페이지 이동 -> localhost:8081/login
+		}
+		
+		return null;
 	}
 }
 
