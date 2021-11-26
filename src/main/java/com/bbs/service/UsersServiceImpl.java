@@ -46,7 +46,7 @@ public class UsersServiceImpl implements UsersService {
 		int auth_num = rd.nextInt(9999) + 1;
 		
 		
-		String from    = "qazwsx4887@naver.com";
+		String from    = "ssb4887suk@daum.net";
 		String to      = user_mail;
 		String subject = "인증번호 메일";
 		String content = "다음 인증번호를 입력하세요. <br> <h2>" + auth_num + "</h2>";
@@ -64,6 +64,7 @@ public class UsersServiceImpl implements UsersService {
 		p.put("mail.smtp.host", "smtp.daum.net");
 		p.put("mail.smtp.port", "465");  
 		p.put("mail.smtp.starttls.enable", "true");
+		p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		p.put("mail.smtp.auth", "true");
 		p.put("mail.smtp.debug", "true");
 		p.put("mail.smtp.socketFactory.port", "465");
@@ -98,9 +99,33 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public int checkAuthnum(Authmail authmail) throws Exception {
-		int result = 0;
+		
+		int result = 1;
+		Integer exist = dao.getAuthnum(authmail.getUser_mail());
+		
+		
+		// 맞을 때
+		if(exist.equals(authmail.getAuth_num())) {
+			dao.deleteAuthmail(authmail.getUser_mail());
+			result = 0;
+		}
+//		// 틀릴 때  필요없는 코드
+//		else {
+//			result = 1;
+//		}
 			
 		return result;
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

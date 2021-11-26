@@ -78,7 +78,8 @@ public class MainController {
 	@ResponseBody
 	public String mailAuth(Authmail authmail) throws Exception{
 		
-		return null;
+		
+		return usersService.checkAuthnum(authmail) + ""; 
 	}
 }
 

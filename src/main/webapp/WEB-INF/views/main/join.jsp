@@ -166,7 +166,7 @@
 				<div class="row">
 					<!-- 이메일 입력 -->
 					<div class="form-group col-sm-9 col-md-9 col-lg-9">
-						<input type="email" class="form-control" id="user_email" name="user_email" placeholder="이메일">
+						<input type="email" class="form-control" id="user_email" name="user_email" placeholder="이메일" readonly>
 					</div>
 					<div class="col-sm-3 col-md-3 col-lg-3" style="margin-bottom:15px">
 						<button type="button" class="btn btn-success btn-block" 

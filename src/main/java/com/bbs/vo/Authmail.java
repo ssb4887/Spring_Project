@@ -12,8 +12,6 @@ public class Authmail {
 		this.auth_num = auth_num;
 	}
 
-
-
 	public String getUser_mail() {
 		return user_mail;
 	}
