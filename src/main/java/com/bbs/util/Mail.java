@@ -11,7 +11,7 @@ public class Mail extends Authenticator {
 		
 	public Mail() {
 		id = "ssb4887suk@daum.net";
-		pw = "sss57544";
+		pw = "";
 	}
 		
 	protected PasswordAuthentication getPasswordAuthentication() {
