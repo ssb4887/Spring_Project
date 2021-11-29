@@ -48,7 +48,7 @@
  	</insert>
  	
  	<!-- 로그인 SQL -->
- 	<select id="login" resultType="com.bbs.vo.Users">
+ 	<select id="login" resultType="Users">
 		SELECT *
  		FROM USERS
  		WHERE user_id = #{user_id} 
