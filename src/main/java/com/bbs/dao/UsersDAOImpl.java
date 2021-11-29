@@ -9,7 +9,7 @@ import com.bbs.vo.Authmail;
 import com.bbs.vo.Users;
 
 @Repository
-public class UsersDAOImlp implements UsersDAO {
+public class UsersDAOImpl implements UsersDAO {
 
 	@Inject
 	SqlSession sqlSession;
