@@ -127,7 +127,7 @@
 <!-- 메인 컨텐츠 종료 -->
 
 <script>
-document.ready(function(){
+$(document).ready(function(){
 	var msg = '${msg}';
 	if(msg != null && msg != '') alert(msg);	
 });

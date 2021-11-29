@@ -296,7 +296,7 @@
 <!-- 주소 검색 모달 종료 -->
 
 <script>
-document.ready(function(){
+$(document).ready(function(){
 	var msg = '${msg}';
 	if(msg != null && msg != '') alert(msg);	
 });
