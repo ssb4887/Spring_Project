@@ -13,7 +13,7 @@
  	
  	 <!-- 이메일 인증번호 불어오기 SQL -->
  	 <!-- SELECT만 데이터 반환타입 설정해준다 -->
- 	<select id="getAuthnum" resultType="int"> <!-- 여기서 int는 기존의 int가 아니라 integer다 -->
+ 	<select id="getAuthnum" resultType="int"> <!-- 여기서 int는 기존의 int가 아니라 integer다(객체를 반환하기때문) -->
  		SELECT 	auth_num
  		FROM 	AUTHMAIL
  		WHERE 	user_mail = #{user_mail}
@@ -54,6 +54,43 @@
  		WHERE user_id = #{user_id} 
  		AND   user_pw = #{user_pw}
  	</select>
+ 	
+ 	<!-- 게시물 쓰기 SQL -->
+ 	<insert id="write">
+ 		INSERT INTO BOARDER(writer, title, contents, reg_date, likey, available)
+ 		VALUES (#{writer}, #{title}, #{contents}, now(), 0, 0)
+ 		<selectKey keyProperty="boarder_id" resultType="_int" order="AFTER"><!-- primarykey -->
+ 			SELECT LAST_INSERT_ID()<!-- 작성하는 당시에는 boarder_id값을 알수 없다 이를 해결하기 위해 boarder_id를 반환해준다 -->
+ 		</selectKey>
+ 	</insert>
+ 	
+ 	<!-- 파일 업로드 SQL(id : fileUpload -->
+ 	<insert id="fileUpload">
+ 		INSERT INTO UPLOADFILE(boarder_id, file_name, file_realName, count)
+ 		VALUES (#{boarder_id}, #{file_name}, #{file_realName}, 0)
+ 	</insert>
+ 	
+ 	<!-- 게시물 불러오기 SQL (id : getBoarder)-->
+ 	<select id="getBoarder" parameterType="int" resultType="Boarder">
+ 		Select  *
+ 		FROM 	BOARDER
+ 		WHERE 	boarder_id = #{boarder_id}
+ 		AND 	available  = 0
+ 	</select>
+ 	
+ 	<!-- 첨부파일 불러오기 SQL (id : getUploadFile, 조건 : boarder_id ?) -->
+ 	<select id="getUploadFile" resultType="UploadFile">
+ 		SELECT *
+ 		FROM 	UPLOADFILE
+ 		WHERE	boarder_id = #{boarder_id}
+ 	</select>
+ 	<!-- 첨부파일 불러오기 SQL (id : getUploadFileReal, 조건 : file_realName ?) -->
+ 	<select id="getUploadFileReal" resultType="UploadFile">
+ 		SELECT *
+ 		FROM UPLOADFILE
+ 		WHERE file_realName = #{file_realName}
+ 	</select>
+ 	
  </mapper>
  
  

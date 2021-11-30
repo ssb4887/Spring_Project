@@ -6,7 +6,7 @@
  	<typeAliases>
   		<typeAlias alias="Users" type="com.bbs.vo.Users"/>
   		<typeAlias alias="Authmail" type="com.bbs.vo.Authmail"/>
-  		<typeAlias alias="Boader" type="com.bbs.vo.Boarder"/>
+  		<typeAlias alias="Boarder" type="com.bbs.vo.Boarder"/>
   		<typeAlias alias="Reply" type="com.bbs.vo.Reply"/>
   		<typeAlias alias="Likey_R" type="com.bbs.vo.Likey_R"/>
   		<typeAlias alias="UploadFile" type="com.bbs.vo.UploadFile"/>
