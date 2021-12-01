@@ -1,10 +1,15 @@
 package com.bbs.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
@@ -65,6 +70,50 @@ public class BbsServiceImpl implements BbsService {
 		return map; 
 		// return boarder, uploadFile 2개이상 반환은 좋지않기도하며 실행되지도 않는다
 	}
+
+	@Override
+	public void downloadAction(HttpServletRequest request, HttpServletResponse response, UploadFile uploadFile) throws Exception {
+		
+		uploadFile = dao.getUploadFile(uploadFile.getFile_realName());
+		
+		String browser = request.getHeader("User-Agent");
+		
+		// 파일의 인코딩 설정
+		if(browser.contains("MSIE") || browser.contains("Trident") || browser.contains("Chrome")) {
+			uploadFile.setFile_realName( URLEncoder.encode(uploadFile.getFile_realName(), "UTF-8").replaceAll("\\+", "%20"));
+			uploadFile.setFile_name(URLEncoder.encode(uploadFile.getFile_name(), "UTF-8").replaceAll("\\+", "%20"));
+		}
+		else {
+			uploadFile.setFile_realName(new String(uploadFile.getFile_realName().getBytes("UTF-8"), "ISO-8859-1"));
+			uploadFile.setFile_name(new String(uploadFile.getFile_name().getBytes("UTF-8"), "ISO-8859-1"));
+		}
+		
+		String file_name = PATH + uploadFile.getFile_realName();
+		// File(file_name)은 객체로 받아오고 exists 존재한다면 true값 반환 
+		if(!new File(file_name).exists()) return;
+		
+		response.setContentType("application/octer-stream");
+		response.setHeader("Content-Transfer-Encoding", "binary;");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + uploadFile.getFile_name() + "\"" );
+		
+		// output에 대한 통로
+		OutputStream     os = response.getOutputStream();
+		// input에 대한 통로
+		FileInputStream fis = new FileInputStream(file_name);
+
+		int ncount = 0;
+		byte[] bytes = new byte[512];
+		
+		// input 통로를 통해서 512byte로 읽으면서 더 이상 읽을게 없다면 -1 반환
+		while((ncount = fis.read(bytes)) != -1) {
+			// bytes에 ncount가 담긴다
+			os.write(bytes, 0, ncount);
+		}
+		
+		fis.close();
+		os.close();
+	}
+	
 	
 	
 }

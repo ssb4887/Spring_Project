@@ -23,8 +23,8 @@
 <!-- 게시글 수정 양식 -->
 <div class="container">
 	<div class="row">
-		<form method="POST" action="./updateAction">
-			<input type="hidden" name="bbsID" value="${boarder.boarder_id }">
+		<form method="POST" action="./updateAction" enctype="multipart/form-data">
+			<input type="hidden" name="bbsID" value="${map.boarder.boarder_id }">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #bbbbbb;">
 				<thead>
 					<tr>
@@ -35,19 +35,30 @@
 					<tr>
 						<td style="width:20%;">제목</td> <!-- 밑에도 똑같이 20%씩 적용 -->
 						
-						<td><input type="text" class="form-control" name="title"value="${boarder.title }"></td>
+						<td><input type="text" class="form-control" name="title"value="${map.boarder.title }"></td>
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td><input type="hidden" name="writer" value="${boarder.writer }">${boarder.writer }</td>
+						<td><input type="hidden" name="writer" value="${map.boarder.writer }">${map.boarder.writer }</td>
 					</tr>
 					<tr>
 						<td>작성일</td>
-						<td>${boarder.reg_date }</td>
+						<td>${map.boarder.reg_date }</td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td><textarea class="form-control" name="content" style="height:350px">${boarder.contents }</textarea></td>
+						<td><textarea class="form-control" name="content" style="height:350px">${map.boarder.contents }</textarea></td>
+					</tr>
+					
+					<c:if test="${not empty map.uploadFile }">
+					<tr>
+						<td>첨부파일</td>
+						<td>${map.uploadFile.file_name }</td>
+					</tr>
+					
+					</c:if>
+					<tr>
+						<td colspan="2"><input type="file" class="form-control" id="file" placeholder="첨부파일" name="file"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -71,7 +82,7 @@ $(document).ready(function(){
 
 
 
-
+					
 
 
 
