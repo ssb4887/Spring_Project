@@ -81,14 +81,14 @@ public class BbsController {
 				ra.addFlashAttribute("msg", "로그인이 필요합니다.");
 				return "redirect:/login";
 			}
-			else if(map.get("boarder") == null) {
+			if(map.get("boarder") == null) {
 				// 존재하지 않는 게시물입니다. 메시지
 				ra.addFlashAttribute("msg", "존재하지 않는 게시물입니다.");
 				// /bbs 돌려보냄
 				return "redirect:/bbs";
 			}
 			
-			else if(!user_id.equals(boarder.getWriter())) {
+			if(!user_id.equals(boarder.getWriter())) {
 				ra.addFlashAttribute("msg", "권한이 없습니다.");
 				return "redirect:/bbs";
 			}
@@ -128,6 +128,14 @@ public class BbsController {
 		return "redirect:/bbs/view?boarder_id=" + uploadFile.getBoarder_id();
 	}
 	
+	// url 패턴이 'path/bbs/updateAction'일 경우
+	@RequestMapping(value = "/updateAction", method = RequestMethod.POST) // POST 전송시 검증이 따로 필요없다
+	public String updateAction(Boarder boarder, MultipartFile file) throws Exception {
+		
+		bbsService.updateAction(boarder, file);
+		
+		return "redirect:/bbs/view?boarder_id=" + boarder.getBoarder_id() ;
+	}
 }
 
 

@@ -5,17 +5,17 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bbs.dao.BbsDAO;
+import com.bbs.util.FileUpload;
 import com.bbs.vo.Boarder;
 import com.bbs.vo.UploadFile;
 
@@ -31,29 +31,15 @@ public class BbsServiceImpl implements BbsService {
 	public void writeAction(Boarder boarder, MultipartFile file) throws Exception {
 		
 		// 게시글 작성 기능
-		boarder = dao.write(boarder);
+		boarder = dao.write(boarder);// 작성자를 모르기에 boarder를 받아온다.
 		
 		// 파일 업로드 기능
 		// 파일 객체가 비었을 때 (파일 입력하지 않았을 때)
 		if(file.isEmpty()) return;
 		
-		// 작성자가 올린 파일의 원본 이름
-		String file_name = file.getOriginalFilename();
-		// 파일의 확장자를 구함
-		String suffix	 = FilenameUtils.getExtension(file_name);
-		// 랜덤한 중복되지 않는 ID 값을 받아옴
-		UUID uuid 		 = UUID.randomUUID(); // 기존에 있던 함수
-		// 파일이 저장될 때 이름
-		String file_realName = uuid + "." + suffix;
-		// 파일 업로드(객체를 생성하자마자 바로 보내줌)
-		file.transferTo(new File(PATH + file_realName));
 		
-		UploadFile uploadFile = new UploadFile();
-		uploadFile.setBoarder_id(boarder.getBoarder_id());
-		uploadFile.setFile_name(file_name);
-		uploadFile.setFile_realName(file_realName);
 		
-		dao.fileUpload(uploadFile);
+		dao.fileUpload(FileUpload.upload(boarder, file, PATH));
 	}
 
 	@Override
@@ -112,6 +98,43 @@ public class BbsServiceImpl implements BbsService {
 		
 		fis.close();
 		os.close();
+	}
+
+	@Override
+	public void updateAction(Boarder boarder, MultipartFile file) throws Exception {
+		
+		// 게시물 수정 기능
+		dao.updateBoarder(boarder);
+		
+		// 파일 수정 기능
+		// 파일 객체가 비었을 때 (파일 입력하지 않았을 때)
+		if(file.isEmpty()) return;
+		
+		// uploadFile을 데이터베이스에서 불러옴
+		// 만약 null이면 원본이 존재 X
+		// null이 아니면 원본이 존재 O
+		UploadFile uploadFile = dao.getUploadFile(boarder.getBoarder_id());
+		
+		
+		if(uploadFile == null) {
+			dao.fileUpload(FileUpload.upload(boarder, file, PATH));
+			
+		}
+		else {
+			new File(PATH + uploadFile.getFile_realName()).delete();
+			dao.updateFile(FileUpload.upload(boarder, file, PATH));
+		}
+		
+	}
+
+	@Override
+	public HashMap<String, Object> bbs(int pageNumber) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		List<Boarder> list = dao.getBbsList(dao.getMaxBoarder_id() - (pageNumber - 1) * 10);
+		
+		return null;
 	}
 	
 	

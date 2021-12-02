@@ -24,7 +24,7 @@
 <div class="container">
 	<div class="row">
 		<form method="POST" action="./updateAction" enctype="multipart/form-data">
-			<input type="hidden" name="bbsID" value="${map.boarder.boarder_id }">
+			<input type="hidden" name="boarder_id" value="${map.boarder.boarder_id }">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #bbbbbb;">
 				<thead>
 					<tr>
@@ -47,7 +47,7 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td><textarea class="form-control" name="content" style="height:350px">${map.boarder.contents }</textarea></td>
+						<td><textarea class="form-control" name="contents" style="height:350px">${map.boarder.contents }</textarea></td>
 					</tr>
 					
 					<c:if test="${not empty map.uploadFile }">

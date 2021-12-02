@@ -1,5 +1,7 @@
 package com.bbs.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -46,5 +48,27 @@ public class BbsDAOImpl implements BbsDAO {
 	public UploadFile getUploadFile(String file_realName) throws Exception {
 		
 		return sqlSession.selectOne(SESSION + ".getUploadFileReal", file_realName);
+	}
+
+	@Override
+	public void updateBoarder(Boarder boarder) throws Exception {
+		sqlSession.update(SESSION + ".updateBoarder", boarder);
+		
+	}
+
+	@Override
+	public void updateFile(UploadFile uploadFile) throws Exception {
+		sqlSession.update(SESSION + ".updateFile", uploadFile);
+		
+	}
+
+	@Override
+	public int getMaxBoarder_id() throws Exception {
+		return sqlSession.selectOne(SESSION + ".getBoarder_id");
+	}
+
+	@Override
+	public List<Boarder> getBbsList(int boarder_id) throws Exception {
+		return sqlSession.selectList(SESSION + ".getBbsList", boarder_id);
 	}
 }

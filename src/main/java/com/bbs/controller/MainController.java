@@ -54,6 +54,51 @@ public class MainController {
 		return "main/login";  
 	}
 	
+	// url 패턴이 'path/bbs'일 경우
+	@RequestMapping(value = "/bbs", method = RequestMethod.GET)
+	public String bbs(Integer pageNumber, Model model) throws Exception {
+		
+		if(pageNumber == null) pageNumber = 1; // null 값을 받아오기 위해 Integer 사용
+		
+		System.out.println("pageNumber :" + pageNumber);
+			
+		return "bbs/bbs";
+	}
+		
+	// url 패턴이 'path/joinAction'일 경우
+	@RequestMapping(value = "/joinAction", method = RequestMethod.POST) //@ResponseBody를 안적는 이유는 결과값이 필요하지 않기에 그저 회원가입후 로그인페이지로 이동
+	public String joinAction(Users users, String addr1, String addr2, String addr3) throws Exception {
+				
+		users.setUser_addr(addr1 + " " + addr2 + " " + addr3);
+		usersService.joinAction(users);
+				
+				
+		return "redirect:/login"; // redirect:/login  = http://localhost:8081/login
+	}
+	// url 패턴이 'path/loginAction'일 경우
+	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
+	public String loginAction(Users users, HttpSession session, RedirectAttributes ra) throws Exception {
+				
+		int result = usersService.loginAction(users);
+		String url = null;
+				
+		if(result == 0) {
+			session.setAttribute("user_id", users.getUser_id());
+			url = "redirect:/";
+			// 페이지 이동 -> localhost:8081/
+					
+		} else {
+			// 메세지 전달 (로그인 정보가 잘못됐습니다.)
+			// 페이지 이동 -> localhost:8081/login
+			ra.addFlashAttribute("msg", "로그인 정보가 일치하지 않습니다.");
+			url = "redirect:/login";
+		}
+				
+		return url;
+	}
+		
+	
+	
 	// url 패턴이 'path/idCheck' 일 경우
 	// http://localhost:8081/idCeck?user_id=qwer
 	@RequestMapping(value = "/idCheck", method = RequestMethod.GET)
@@ -85,37 +130,7 @@ public class MainController {
 		return usersService.checkAuthnum(authmail) + ""; 
 	}
 	
-	// url 패턴이 'path/joinAction'일 경우
-	@RequestMapping(value = "/joinAction", method = RequestMethod.POST) //@ResponseBody를 안적는 이유는 결과값이 필요하지 않기에 그저 회원가입후 로그인페이지로 이동
-	public String joinAction(Users users, String addr1, String addr2, String addr3) throws Exception {
-		
-		users.setUser_addr(addr1 + " " + addr2 + " " + addr3);
-		usersService.joinAction(users);
-		
-		
-		return "redirect:/login"; // redirect:/login  = http://localhost:8081/login
-	}
-	// url 패턴이 'path/loginAction'일 경우
-	@RequestMapping(value = "/loginAction", method = RequestMethod.POST)
-	public String loginAction(Users users, HttpSession session, RedirectAttributes ra) throws Exception {
-		
-		int result = usersService.loginAction(users);
-		String url = null;
-		
-		if(result == 0) {
-			session.setAttribute("user_id", users.getUser_id());
-			url = "redirect:/";
-			// 페이지 이동 -> localhost:8081/
-			
-		} else {
-			// 메세지 전달 (로그인 정보가 잘못됐습니다.)
-			// 페이지 이동 -> localhost:8081/login
-			ra.addFlashAttribute("msg", "로그인 정보가 일치하지 않습니다.");
-			url = "redirect:/login";
-		}
-		
-		return url;
-	}
+	
 	// url 패턴이 'path/logout'일 경우
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
@@ -124,13 +139,6 @@ public class MainController {
 		
 		
 		return "redirect:/";
-	}
-	
-	// url 패턴이 'path/bbs'일 경우
-	@RequestMapping(value = "/bbs", method = RequestMethod.GET)
-	public String bbs(Model model) throws Exception {	
-		
-		return "bbs/bbs";
 	}
 	
 	

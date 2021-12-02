@@ -3,8 +3,6 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- JSTL과 EL을 이용해서 Session에 있는 user_id 값을 가져와 user_id에 저장 -->
-<c:set var="user_id" value="${sessionScope.user_id }" />
    
 <!DOCTYPE html>
 <html>
@@ -68,7 +66,7 @@
 		
 			<c:if test="${paging.pageNumber > 5 }">
 			
-			<li><a href="./bbs?pageNum=${paging.before }"><span class="glyphicon glyphicon-triangle-left"></span></a></li>
+			<li><a href="./bbs?pageNumber=${paging.before }"><span class="glyphicon glyphicon-triangle-left"></span></a></li>
 			
 			</c:if>
 			
@@ -78,7 +76,7 @@
 			<li class="active"><a>${i }</a></li>
 			</c:if>
 			<c:if test="${i != paging.pageNumber }">
-			<li><a href="./bbs?pageNum=${i }">${i }</a></li>
+			<li><a href="./bbs?pageNumber=${i }">${i }</a></li>
 			</c:if>	
 					
 			</c:forEach>
@@ -86,7 +84,7 @@
 						
 			<c:if test="${paging.next }">
 			
-			<li><a href="./bbs?pageNum=${paging.forward }"><span class="glyphicon glyphicon-triangle-right"></span></a></li>
+			<li><a href="./bbs?pageNumber=${paging.forward }"><span class="glyphicon glyphicon-triangle-right"></span></a></li>
 			
 			</c:if>
 			
