@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bbs.service.BbsService;
 import com.bbs.service.UsersService;
 import com.bbs.vo.Authmail;
 import com.bbs.vo.Users;
@@ -22,6 +23,8 @@ public class MainController {
 	// 인터페이스를 자동으로 생성해줌 @Inject
 	@Inject  
 	UsersService service;
+	@Inject
+	BbsService bbsService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
@@ -60,7 +63,7 @@ public class MainController {
 		
 		if(pageNumber == null) pageNumber = 1; // null 값을 받아오기 위해 Integer 사용
 		
-		System.out.println("pageNumber :" + pageNumber);
+		model.addAttribute("map", bbsService.bbs(pageNumber));
 			
 		return "bbs/bbs";
 	}

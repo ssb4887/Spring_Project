@@ -64,11 +64,17 @@ public class BbsDAOImpl implements BbsDAO {
 
 	@Override
 	public int getMaxBoarder_id() throws Exception {
-		return sqlSession.selectOne(SESSION + ".getBoarder_id");
+		return sqlSession.selectOne(SESSION + ".getMaxBoarder_id");
 	}
 
 	@Override
 	public List<Boarder> getBbsList(int boarder_id) throws Exception {
 		return sqlSession.selectList(SESSION + ".getBbsList", boarder_id);
+	}
+
+	@Override
+	public void deleteBoarder(int boarder_id) throws Exception {
+		sqlSession.update(SESSION + ".deleteBoarder", boarder_id);
+		
 	}
 }

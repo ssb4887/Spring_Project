@@ -17,4 +17,5 @@ public interface BbsService {
 	public void downloadAction(HttpServletRequest request, HttpServletResponse response, UploadFile uploadFile) throws Exception;
 	public void updateAction(Boarder boarder, MultipartFile file) throws Exception;
 	public HashMap<String, Object> bbs(int pageNumber) throws Exception;
+	public void deleteAction(int boarder_id) throws Exception;
 }

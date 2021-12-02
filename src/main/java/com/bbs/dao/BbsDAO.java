@@ -16,4 +16,5 @@ public interface BbsDAO {
 	public void updateFile(UploadFile uploadFile) throws Exception;
 	public int getMaxBoarder_id() throws Exception;
 	public List<Boarder> getBbsList(int boarder_id) throws Exception;
+	public void deleteBoarder(int boarder_id) throws Exception;
 } 

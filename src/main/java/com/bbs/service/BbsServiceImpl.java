@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bbs.dao.BbsDAO;
 import com.bbs.util.FileUpload;
 import com.bbs.vo.Boarder;
+import com.bbs.vo.Paging;
 import com.bbs.vo.UploadFile;
 
 @Service
@@ -132,9 +133,26 @@ public class BbsServiceImpl implements BbsService {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		List<Boarder> list = dao.getBbsList(dao.getMaxBoarder_id() - (pageNumber - 1) * 10);
+		int max = dao.getMaxBoarder_id();
 		
-		return null;
+//		List<Boarder> list = dao.getBbsList(dao.getMaxBoarder_id() - (pageNumber - 1) * 10);
+//		Paging paging = new Paging(pageNumber, dao.getMaxBoarder_id());
+		// 데이터베이스의 용량이 매우 커졌을때 dao로 접근을 하면 성능에 문제가 발생한다. 그래서 한번만 접근할 수 있게 변수에 담아서 사용한다. 
+		
+		List<Boarder> list = dao.getBbsList(max - (pageNumber - 1) * 10);
+		Paging paging = new Paging(pageNumber, max);
+		
+		
+		map.put("list", list);
+		map.put("paging", paging);
+		
+		return map;
+	}
+
+	@Override
+	public void deleteAction(int boarder_id) throws Exception {
+		dao.deleteBoarder(boarder_id);
+		
 	}
 	
 	
