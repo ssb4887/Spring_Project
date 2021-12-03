@@ -27,7 +27,7 @@
 </head>
 <body>
 
-<jsp:include page="../mainNav.jsp"/>
+<jsp:include page="../bbsNav.jsp"/>
 
 <!-- 메인 게시판 -->
 <div class="container">

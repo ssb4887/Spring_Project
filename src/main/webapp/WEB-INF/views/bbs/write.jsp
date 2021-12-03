@@ -43,7 +43,7 @@ $(document).ready(function(){
 </head>
 <body>
 
-<jsp:include page="../mainNav.jsp"/>
+<jsp:include page="../bbsNav.jsp"/>
 
 <!-- 글쓰기 양식 -->
 <div class="container">

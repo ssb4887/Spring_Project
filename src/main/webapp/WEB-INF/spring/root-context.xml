@@ -11,6 +11,8 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- 데이터베이스 접근 -->
+	
 	<!-- MySQL -->
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 	id="dataSource">

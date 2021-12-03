@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<jsp:include page="../mainNav.jsp"/>
+<jsp:include page="../bbsNav.jsp"/>
 
 <!-- 게시글 보기 양식 -->
 <div class="container">
